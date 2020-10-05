@@ -35,6 +35,9 @@
 <?php } ?>
 
       </table>
+      <?php for ($i=1; $i <= $results['pagesNumber']; $i++) {
+        echo "<a href='?page=$i'>$i</a>"." ";
+      } ?>
       <p><a href="index.php?action=newArticle">Добавить новую статью</a></p>
 
 <?php include "templates/include/footer.php" ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Окт 02 2020 г., 19:24
+-- Время создания: Окт 05 2020 г., 08:19
 -- Версия сервера: 10.4.11-MariaDB
 -- Версия PHP: 7.4.1
 
@@ -42,7 +42,9 @@ CREATE TABLE `articles` (
 
 INSERT INTO `articles` (`id`, `publicationDate`, `title`, `summary`, `content`) VALUES
 (1, '2020-10-02', 'article1', 'article1article1article1', 'article1article1article1article1article1article1article1article1article1'),
-(3, '2020-10-01', 'article 2 ', 'article 2 article 2 article 2 article 2 ', 'article 2 article 2 article 2 article 2 article 2 article 2 article 2 article 2 v');
+(3, '2020-10-01', 'article 2 ', 'article 2 article 2 article 2 article 2 ', 'article 2 article 2 article 2 article 2 article 2 article 2 article 2 article 2 v'),
+(4, '2020-10-03', 'article 3', 'article 3 article 3', 'article 3 article 3 article 3 article 3 article 3'),
+(5, '2020-10-03', 'article 4', 'article 4article 4', 'article 4article 4article 4 article4 article4');
 
 --
 -- Индексы сохранённых таблиц
@@ -62,7 +64,7 @@ ALTER TABLE `articles`
 -- AUTO_INCREMENT для таблицы `articles`
 --
 ALTER TABLE `articles`
-  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

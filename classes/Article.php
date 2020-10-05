@@ -39,7 +39,6 @@ class Article
       }
     }
   }
-
   /**
   * Returns article object with certain ID
   *
@@ -58,20 +57,36 @@ class Article
     if ( $row ) return new Article( $row );
   }
 
-
   /**
-  * Returns collection of article objects
+  * Returns number of articles
   *
-  * @param int Optional Number of articles
-  * @return Array|false   Сollection of article objects
+  * @return int
   */
 
-  public static function getList( $numRows=1000000) {
+  public static function getArticlesNumber() {
+    $connection  = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+    $sql = "SELECT count(*) as count FROM articles";
+    $st = $connection->prepare( $sql );
+    $st->execute();
+    $num = $st->fetch();
+    $connection = null;
+    return ( $num['count'] );
+  }
+
+  /**
+  * Returns array with article objects
+  *
+  * @param int Optional Number of articles
+  * @return Array|false   Array with article objects
+  */
+
+  public static function getList( $fromNumber=0, $numRows=1000000 ) {
     $connection  = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
     $sql = "SELECT *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles
-            ORDER BY publicationDate DESC LIMIT :numRows";
+            ORDER BY publicationDate DESC LIMIT :fromNumber, :numRows";
 
     $st = $connection->prepare( $sql );
+    $st->bindValue( ":fromNumber", $fromNumber, PDO::PARAM_INT );
     $st->bindValue( ":numRows", $numRows, PDO::PARAM_INT );
     $st->execute();
     $list = array();

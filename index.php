@@ -5,30 +5,42 @@ $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 
 switch ( $action ) {
   case 'viewArticle':
-    viewArticle();
-    break;
- case 'newArticle':
-    newArticle();
-    break;
+  viewArticle();
+  break;
+  case 'newArticle':
+  newArticle();
+  break;
   case 'deleteArticle':
-    deleteArticle();
-    break;
+  deleteArticle();
+  break;
   default:
-    catalog();
+  catalog();
 }
 
 function catalog() {
+  // getting nubber of page or set nummber = 1
+  if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+  } else {
+    $page = 1;
+  }
+  $limit = 3; // setting number of articles at one page
+  $fromNumber = ($limit * $page) - $limit;
+  $articlesNumber = Article::getArticlesNumber();
+  $pagesNumber = ceil($articlesNumber/$limit);
   $results = array();
-  $results['articles'] = Article::getList();
-  $results['pageTitle'] = "Catalog";
-  if ( isset( $_GET['error'] ) ) {
-  if ( $_GET['error'] == "articleNotFound" ) $results['errorMessage'] = "Ошибка:Статья не найдена.";
-}
+  $results['articles'] = Article::getList($fromNumber,$limit);
 
-if ( isset( $_GET['status'] ) ) {
-  if ( $_GET['status'] == "articleSaved" ) $results['statusMessage'] = "Ваша статья сохранена!";
-  if ( $_GET['status'] == "articleDeleted" ) $results['statusMessage'] = "Статья удалена.";
-}
+  $results['pageTitle'] = "Catalog";
+  $results['pagesNumber'] = $pagesNumber;
+  if ( isset( $_GET['error'] ) ) {
+    if ( $_GET['error'] == "articleNotFound" ) $results['errorMessage'] = "Ошибка:Статья не найдена.";
+  }
+
+  if ( isset( $_GET['status'] ) ) {
+    if ( $_GET['status'] == "articleSaved" ) $results['statusMessage'] = "Ваша статья сохранена!";
+    if ( $_GET['status'] == "articleDeleted" ) $results['statusMessage'] = "Статья удалена.";
+  }
   require( "templates/catalog.php" );
 
 }
